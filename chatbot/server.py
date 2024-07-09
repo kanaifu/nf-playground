@@ -1,5 +1,6 @@
 import os
 import run
+from flask_cors import CORS
 from openai import OpenAI
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -7,6 +8,21 @@ from flask import Flask, request, jsonify
 
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*", "allow_headers": "*", "expose_headers": "*", "supports_credentials": True, "max_age": 3600}})
+
+@app.route('/chat', methods=['OPTIONS'])
+def cors_handle():
+    print(request.get_json())
+        # Handle the preflight request here
+    response = jsonify({})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', '*')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    return response
+
+@app.route('/chat', methods=['GET'])
+def process_get():
+    return jsonify({"YES":"YES YOU GET IT"})
 
 @app.route('/chat', methods=['POST'])
 def receive_message():
@@ -68,4 +84,4 @@ def continue_chat(user_message):
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
