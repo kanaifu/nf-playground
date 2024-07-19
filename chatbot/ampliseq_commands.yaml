@@ -1,0 +1,70 @@
+command_id: ampliseq_default_16S
+description: Default nf-core/ampliseq run for 16S rRNA gene sequencing
+usage: Use this for standard 16S rRNA gene amplicon sequencing analysis
+command: >
+  nextflow run nf-core/ampliseq 
+  -r 2.7.1 
+  -profile singularity 
+  --input {INPUT_SAMPLESHEET} 
+  --FW_primer GTGYCAGCMGCCGCGGTAA 
+  --RV_primer GGACTACNVGGGTWTCTAAT 
+  --metadata {INPUT_METADATA} 
+  --outdir results_16S
+input_placeholders:
+  - name: INPUT_SAMPLESHEET
+    description: Path to the input samplesheet TSV file
+  - name: INPUT_METADATA
+    description: Path to the metadata TSV file
+notes: 
+  - This command uses the default 16S primers (515F-806R)
+  - Ensure your samplesheet and metadata files are correctly formatted
+
+---
+
+command_id: ampliseq_ITS_fungal
+description: nf-core/ampliseq run for ITS fungal sequencing
+usage: Use this for fungal ITS amplicon sequencing analysis
+command: >
+  nextflow run nf-core/ampliseq 
+  -r 2.7.1 
+  -profile singularity 
+  --input {INPUT_SAMPLESHEET} 
+  --FW_primer GCATCGATGAAGAACGCAGC 
+  --RV_primer TCCTCCGCTTATTGATATGC 
+  --metadata {INPUT_METADATA} 
+  --outdir results_ITS_fungal
+input_placeholders:
+  - name: INPUT_SAMPLESHEET
+    description: Path to the input samplesheet TSV file
+  - name: INPUT_METADATA
+    description: Path to the metadata TSV file
+notes:
+  - This command uses ITS primers for fungal sequencing (ITS4-ITS5)
+  - Adjust your samplesheet and metadata files accordingly for fungal data
+
+---
+
+command_id: ampliseq_custom_primers
+description: nf-core/ampliseq run with custom primers
+usage: Use this when you have custom primers for your amplicon sequencing
+command: >
+  nextflow run nf-core/ampliseq 
+  -r 2.7.1 
+  -profile singularity 
+  --input {INPUT_SAMPLESHEET} 
+  --FW_primer {CUSTOM_FW_PRIMER} 
+  --RV_primer {CUSTOM_RV_PRIMER} 
+  --metadata {INPUT_METADATA} 
+  --outdir results_custom
+input_placeholders:
+  - name: INPUT_SAMPLESHEET
+    description: Path to the input samplesheet TSV file
+  - name: INPUT_METADATA
+    description: Path to the metadata TSV file
+  - name: CUSTOM_FW_PRIMER
+    description: Sequence of your custom forward primer
+  - name: CUSTOM_RV_PRIMER
+    description: Sequence of your custom reverse primer
+notes:
+  - Replace the primer sequences with your specific custom primers
+  - Ensure your samplesheet and metadata files match your custom amplicon targets
